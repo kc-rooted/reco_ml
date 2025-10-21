@@ -67,4 +67,49 @@
     background-size: 1em;
     appearance: none;
   }
+
+  /* Quiz slider styles */
+  .slider-quiz {
+    background-color: #e5e7eb;
+  }
+
+  .slider-quiz::-webkit-slider-thumb {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #fa4616;
+    cursor: pointer;
+    border: 3px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .slider-quiz::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #fa4616;
+    cursor: pointer;
+    border: 3px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  /* Quiz page font override */
+  .quiz-font {
+    font-family: peridot-pe-variable, sans-serif !important;
+    font-variation-settings: "wght" 400, "wdth" 100, "ital" 0 !important;
+  }
+
+  .quiz-font * {
+    font-family: peridot-pe-variable, sans-serif !important;
+    font-variation-settings: "wght" 400, "wdth" 100, "ital" 0 !important;
+  }
+
+  .quiz-font h1, .quiz-font h2, .quiz-font h3, .quiz-font h4, .quiz-font h5, .quiz-font h6 {
+    font-family: peridot-pe-variable, sans-serif !important;
+    font-variation-settings: "wght" 800, "wdth" 82, "ital" 0 !important;
+    line-height: 1.1em !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+  }
 }

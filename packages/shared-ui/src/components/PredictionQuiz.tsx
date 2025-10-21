@@ -174,7 +174,6 @@ export default function PredictionQuiz({
             />
             <div className="flex justify-between text-xs text-gray-500 mt-1 uppercase">
               <span>-1</span>
-              <span>0</span>
               <span>+1</span>
             </div>
           </div>
@@ -200,7 +199,6 @@ export default function PredictionQuiz({
             />
             <div className="flex justify-between text-xs text-gray-500 mt-1 uppercase">
               <span>-1</span>
-              <span>0</span>
               <span>+1</span>
             </div>
           </div>
@@ -226,7 +224,6 @@ export default function PredictionQuiz({
             />
             <div className="flex justify-between text-xs text-gray-500 mt-1 uppercase">
               <span>-1</span>
-              <span>0</span>
               <span>+1</span>
             </div>
           </div>
