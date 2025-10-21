@@ -36,43 +36,40 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-black">
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <header className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-gray-900 mb-4">
+        <header className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-white uppercase">
             GEARS GOLF SHAFT FINDER
           </h1>
-          <p className="text-xl text-gray-600">
-            Find your perfect shaft in 3 easy steps
-          </p>
         </header>
 
         {/* Progress Indicator */}
-        <div className="flex justify-center mb-12">
-          <div className="flex items-center space-x-4">
-            <div className={`flex items-center ${currentStep === 'quiz' ? 'text-blue-600' : currentStep === 'details' || currentStep === 'thankyou' ? 'text-green-600' : 'text-gray-400'}`}>
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${currentStep === 'quiz' ? 'bg-blue-600 text-white' : currentStep === 'details' || currentStep === 'thankyou' ? 'bg-green-600 text-white' : 'bg-gray-300'}`}>
+        <div className="flex justify-center mb-6">
+          <div className="bg-[#222222] rounded-3xl p-4 flex items-center space-x-4">
+            <div className={`flex items-center ${currentStep === 'quiz' ? 'text-[#DAF612]' : currentStep === 'details' || currentStep === 'thankyou' ? 'text-[#DAF612]' : 'text-gray-500'}`}>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${currentStep === 'quiz' ? 'bg-[#DAF612] text-gray-900' : currentStep === 'details' || currentStep === 'thankyou' ? 'bg-[#DAF612] text-gray-900' : 'bg-[#444444] text-white'}`}>
                 1
               </div>
-              <span className="ml-2 font-medium">Quiz</span>
+              <span className="ml-2 font-medium uppercase">Quiz</span>
             </div>
 
-            <div className={`w-16 h-1 ${currentStep === 'details' || currentStep === 'thankyou' ? 'bg-green-600' : 'bg-gray-300'}`}></div>
+            <div className={`w-16 h-1 ${currentStep === 'details' || currentStep === 'thankyou' ? 'bg-[#DAF612]' : 'bg-[#444444]'}`}></div>
 
-            <div className={`flex items-center ${currentStep === 'details' ? 'text-blue-600' : currentStep === 'thankyou' ? 'text-green-600' : 'text-gray-400'}`}>
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${currentStep === 'details' ? 'bg-blue-600 text-white' : currentStep === 'thankyou' ? 'bg-green-600 text-white' : 'bg-gray-300'}`}>
+            <div className={`flex items-center ${currentStep === 'details' ? 'text-[#DAF612]' : currentStep === 'thankyou' ? 'text-[#DAF612]' : 'text-gray-500'}`}>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${currentStep === 'details' ? 'bg-[#DAF612] text-gray-900' : currentStep === 'thankyou' ? 'bg-[#DAF612] text-gray-900' : 'bg-[#444444] text-white'}`}>
                 2
               </div>
-              <span className="ml-2 font-medium">Your Info</span>
+              <span className="ml-2 font-medium uppercase">Your Info</span>
             </div>
 
-            <div className={`w-16 h-1 ${currentStep === 'thankyou' ? 'bg-green-600' : 'bg-gray-300'}`}></div>
+            <div className={`w-16 h-1 ${currentStep === 'thankyou' ? 'bg-[#DAF612]' : 'bg-[#444444]'}`}></div>
 
-            <div className={`flex items-center ${currentStep === 'thankyou' ? 'text-green-600' : 'text-gray-400'}`}>
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${currentStep === 'thankyou' ? 'bg-green-600 text-white' : 'bg-gray-300'}`}>
+            <div className={`flex items-center ${currentStep === 'thankyou' ? 'text-[#DAF612]' : 'text-gray-500'}`}>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${currentStep === 'thankyou' ? 'bg-[#DAF612] text-gray-900' : 'bg-[#444444] text-white'}`}>
                 3
               </div>
-              <span className="ml-2 font-medium">Complete</span>
+              <span className="ml-2 font-medium uppercase">Complete</span>
             </div>
           </div>
         </div>
@@ -81,9 +78,9 @@ function App() {
         {currentStep === 'quiz' && (
           <PredictionQuiz
             showPercentages={false}
-            branding="consumer"
+            branding="admin"
             onComplete={handleQuizComplete}
-            submitButtonText="See My Recommendations"
+            submitButtonText="Get Recommendations"
           />
         )}
 

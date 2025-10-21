@@ -75,14 +75,22 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
   return (
     <div className="max-w-3xl mx-auto">
       {/* Show Recommendations Summary */}
-      <div className="bg-white rounded-3xl p-8 mb-8 shadow-lg">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6">Your Recommended Shafts</h2>
+      <div className="bg-[#222222] rounded-3xl p-8 mb-8">
+        <h2 className="text-3xl font-bold text-white mb-6 uppercase">Your Recommended Shafts</h2>
         <div className="space-y-4">
           {recommendations.map((rec, index) => (
-            <div key={index} className="flex items-center bg-blue-50 rounded-xl p-4">
-              <div className="w-2 h-16 bg-blue-600 rounded mr-4"></div>
+            <div key={index} className="flex items-center bg-[#333333] rounded-2xl p-6">
+              <div
+                className="w-3 h-12 rounded-xl mr-4"
+                style={{
+                  backgroundColor: rec.name.toLowerCase().includes('blue') ? '#9dc1d0' :
+                               rec.name.toLowerCase().includes('red') ? '#f65d4a' :
+                               rec.name.toLowerCase().includes('green') ? '#0c8919' :
+                               '#6b7280'
+                }}
+              ></div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-900">
+                <h3 className="text-xl font-semibold text-white">
                   #{index + 1} {rec.name}
                 </h3>
               </div>
@@ -92,14 +100,14 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
       </div>
 
       {/* User Details Form */}
-      <div className="bg-white rounded-3xl p-8 shadow-lg">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">Almost Done!</h2>
-        <p className="text-gray-600 mb-8">Enter your details to receive your shaft recommendation.</p>
+      <div className="bg-[#222222] rounded-3xl p-8">
+        <h2 className="text-3xl font-bold text-white mb-2 uppercase">Almost Done!</h2>
+        <p className="text-[#b0b0b0] mb-8">Enter your details to receive your shaft recommendation.</p>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-white mb-2 uppercase">
               Full Name *
             </label>
             <input
@@ -107,7 +115,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className={`w-full px-4 py-3 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              className={`w-full bg-[#444444] rounded-xl pl-4 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary-400/20 ${errors.name ? 'border-2 border-red-500' : ''}`}
               placeholder="John Doe"
             />
             {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
@@ -115,7 +123,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
 
           {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-white mb-2 uppercase">
               Email
             </label>
             <input
@@ -123,14 +131,14 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-[#444444] rounded-xl pl-4 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary-400/20"
               placeholder="john@example.com"
             />
           </div>
 
           {/* Phone */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-white mb-2 uppercase">
               Phone
             </label>
             <input
@@ -138,18 +146,18 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-[#444444] rounded-xl pl-4 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary-400/20"
               placeholder="(555) 123-4567"
             />
           </div>
 
           {/* Shipping Address */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Shipping Address</h3>
+            <h3 className="text-lg font-semibold text-white mb-4 uppercase">Shipping Address</h3>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-white mb-2 uppercase">
                   Street Address *
                 </label>
                 <input
@@ -157,7 +165,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
                   name="street"
                   value={formData.street}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border ${errors.street ? 'border-red-500' : 'border-gray-300'} rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                  className={`w-full bg-[#444444] rounded-xl pl-4 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary-400/20 ${errors.street ? 'border-2 border-red-500' : ''}`}
                   placeholder="123 Main St"
                 />
                 {errors.street && <p className="text-red-500 text-sm mt-1">{errors.street}</p>}
@@ -165,7 +173,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-white mb-2 uppercase">
                     City *
                   </label>
                   <input
@@ -173,14 +181,14 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
                     name="city"
                     value={formData.city}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border ${errors.city ? 'border-red-500' : 'border-gray-300'} rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                    className={`w-full bg-[#444444] rounded-xl pl-4 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary-400/20 ${errors.city ? 'border-2 border-red-500' : ''}`}
                     placeholder="New York"
                   />
                   {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-white mb-2 uppercase">
                     State *
                   </label>
                   <input
@@ -188,7 +196,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
                     name="state"
                     value={formData.state}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border ${errors.state ? 'border-red-500' : 'border-gray-300'} rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                    className={`w-full bg-[#444444] rounded-xl pl-4 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary-400/20 ${errors.state ? 'border-2 border-red-500' : ''}`}
                     placeholder="NY"
                   />
                   {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
@@ -197,7 +205,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-white mb-2 uppercase">
                     ZIP Code *
                   </label>
                   <input
@@ -205,14 +213,14 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
                     name="zip"
                     value={formData.zip}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border ${errors.zip ? 'border-red-500' : 'border-gray-300'} rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                    className={`w-full bg-[#444444] rounded-xl pl-4 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary-400/20 ${errors.zip ? 'border-2 border-red-500' : ''}`}
                     placeholder="10001"
                   />
                   {errors.zip && <p className="text-red-500 text-sm mt-1">{errors.zip}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-white mb-2 uppercase">
                     Country
                   </label>
                   <input
@@ -220,7 +228,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
                     name="country"
                     value={formData.country}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full bg-[#444444] rounded-xl pl-4 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary-400/20"
                   />
                 </div>
               </div>
@@ -248,13 +256,13 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
             <button
               type="button"
               onClick={onBack}
-              className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-4 px-6 rounded-2xl transition-colors"
+              className="flex-1 bg-[#444444] hover:bg-[#555555] text-white font-medium py-4 px-6 rounded-2xl transition-colors uppercase"
             >
               Back to Quiz
             </button>
             <button
               type="submit"
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-4 px-6 rounded-2xl transition-colors"
+              className="flex-1 bg-[#DAF612] hover:bg-[#c5e010] text-gray-900 font-medium py-4 px-6 rounded-2xl transition-colors uppercase"
             >
               Submit
             </button>
