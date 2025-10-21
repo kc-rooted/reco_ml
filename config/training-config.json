@@ -1,0 +1,8 @@
+{
+  "epochs": 100,
+  "batchSize": 32,
+  "validationSplit": 0.2,
+  "patience": 15,
+  "shuffle": true,
+  "verbose": 1
+}

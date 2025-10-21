@@ -1,0 +1,12 @@
+{
+  "inputFeatures": 5,
+  "hiddenUnits": [32, 16],
+  "outputUnits": 13,
+  "dropoutRate": 0.3,
+  "learningRate": 0.001,
+  "activation": {
+    "input": "tanh",
+    "hidden": "relu",
+    "output": "softmax"
+  }
+}
