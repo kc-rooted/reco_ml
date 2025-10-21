@@ -237,7 +237,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
 
           {/* Handicap */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-white mb-2 uppercase">
               Golf Handicap (Optional)
             </label>
             <input
@@ -245,7 +245,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
               name="handicap"
               value={formData.handicap}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-[#444444] rounded-xl pl-4 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary-400/20"
               placeholder="12.5"
               step="0.1"
             />
