@@ -7,6 +7,10 @@ services:
       dockerfile: ./packages/consumer-server/Dockerfile
     ports:
       - "3002:3002"
+    volumes:
+      # Mount the models directory - YOU MUST UPLOAD models/latest/* TO YOUR SERVER
+      # Path on host : Path in container
+      - ./models:/app/models
     environment:
       # Server
       - PORT=3002
