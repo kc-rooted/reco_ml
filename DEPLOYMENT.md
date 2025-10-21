@@ -26,39 +26,19 @@ git commit -m "Initial commit - OVVIO DTC Consumer Server"
 git push -u origin master
 ```
 
-## Step 2: Upload Models to Server
+## Step 2: Prepare Model Files
 
-**IMPORTANT**: The trained ML models are NOT in the git repository (they're too large). You must manually upload them to your server.
+**IMPORTANT**: The trained ML models are NOT in the git repository (they're too large). You'll upload them via Portainer during stack creation.
 
-### Option A: Direct Upload via Portainer
-
-1. SSH into your Portainer server
-2. Create the models directory:
-   ```bash
-   mkdir -p /path/to/your/stack/models/latest
-   ```
-3. Upload the model files to `/path/to/your/stack/models/latest/`:
-   - `model.json`
-   - `model.weights.bin`
-   - Any other model files
-
-### Option B: Use SCP
-
-```bash
-# From your local machine
-scp -r models/latest/* user@your-server:/path/to/your/stack/models/latest/
+Your local `models` directory should contain:
+```
+models/
+└── latest/
+    ├── model.json
+    └── model.weights.bin
 ```
 
-### Verify Upload
-
-The models directory on your server should look like:
-```
-/path/to/your/stack/
-├── models/
-│   └── latest/
-│       ├── model.json
-│       └── model.weights.bin
-```
+You'll upload these files in Step 3 using Portainer's "Additional paths" feature.
 
 ## Step 3: Create Stack in Portainer
 
@@ -69,6 +49,17 @@ The models directory on your server should look like:
 5. Repository URL: `https://github.com/YOUR_USERNAME/YOUR_REPO`
 6. Repository reference: `refs/heads/master`
 7. Compose path: `docker-compose.yml`
+
+### Upload Models via Additional Paths
+
+Scroll down to the **Additional paths** section:
+
+1. Click **+ Add file**
+2. **Path in repository**: `models`
+3. Click **Select file** and choose your entire `models` directory (with `latest/model.json` and `latest/model.weights.bin` inside)
+4. This will make the models available to the Docker build context
+
+**Note**: The `models` folder should contain the `latest` subdirectory with your model files.
 
 ## Step 4: Configure Environment Variables
 
@@ -223,3 +214,25 @@ curl -X POST https://your-domain.com/api/predict \
   -H "Content-Type: application/json" \
   -d '{"userAnswers": {...}}'
 ```
+
+## Alternative: Upload Models via SSH (for updates)
+
+If you need to update models after deployment or prefer SSH:
+
+```bash
+# SSH into your Portainer server
+ssh user@your-server
+
+# Navigate to the stack directory
+cd /var/lib/docker/volumes/STACK_NAME_models-data/_data
+
+# Create the directory structure
+mkdir -p latest
+
+# Exit SSH, then from your local machine:
+scp -r models/latest/* user@your-server:/var/lib/docker/volumes/STACK_NAME_models-data/_data/latest/
+
+# Restart the stack in Portainer to reload models
+```
+
+Replace `STACK_NAME` with your actual stack name (e.g., `ovvio-dtc-consumer`).
