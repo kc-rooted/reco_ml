@@ -1,3 +1,4 @@
+import './util-patch'; // Must be first to fix TensorFlow.js util issue
 import express from 'express';
 import cors from 'cors';
 import * as tf from '@tensorflow/tfjs-node';
