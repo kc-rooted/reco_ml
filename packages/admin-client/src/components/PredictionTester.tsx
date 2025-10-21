@@ -188,42 +188,77 @@ export default function PredictionTester() {
           
           {/* Top Recommendations */}
           <div className="space-y-4 mb-8">
-            {predictions.recommendations.map((rec: any, index: number) => (
-              <div key={index} className="bg-[#333333] rounded-2xl p-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center flex-1">
-                    <div 
-                      className="w-3 h-12 rounded-xl mr-4"
-                      style={{
-                        backgroundColor: rec.name.toLowerCase().includes('blue') ? '#9dc1d0' : 
-                                       rec.name.toLowerCase().includes('red') ? '#f65d4a' : 
-                                       rec.name.toLowerCase().includes('green') ? '#0c8919' :
-                                       '#6b7280'
-                      }}
-                    ></div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white mb-1">
-                        #{index + 1} {rec.name}
-                      </h3>
-                      <p className="text-[#b0b0b0]">
-                        Confidence: {rec.percentage}%
-                      </p>
-                    </div>
-                  </div>
-                  <div className="w-24 text-right">
-                    <div className="w-full bg-[#444444] rounded-full h-3 mb-2">
-                      <div 
-                        className="bg-[#DAF612] h-3 rounded-full transition-all duration-500"
-                        style={{ width: `${rec.percentage}%` }}
+            {predictions.recommendations.map((rec: any, index: number) => {
+              const explanation = predictions.explanations && predictions.explanations[index];
+
+              return (
+                <div key={index} className="bg-[#333333] rounded-2xl p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center flex-1">
+                      <div
+                        className="w-3 h-12 rounded-xl mr-4"
+                        style={{
+                          backgroundColor: rec.name.toLowerCase().includes('blue') ? '#9dc1d0' :
+                                         rec.name.toLowerCase().includes('red') ? '#f65d4a' :
+                                         rec.name.toLowerCase().includes('green') ? '#0c8919' :
+                                         '#6b7280'
+                        }}
                       ></div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-1">
+                          #{index + 1} {rec.name}
+                        </h3>
+                        <p className="text-[#b0b0b0]">
+                          Confidence: {rec.percentage}%
+                        </p>
+                      </div>
                     </div>
-                    <span className="text-sm font-medium text-primary-400">
-                      {rec.percentage}%
-                    </span>
+                    <div className="w-24 text-right">
+                      <div className="w-full bg-[#444444] rounded-full h-3 mb-2">
+                        <div
+                          className="bg-[#DAF612] h-3 rounded-full transition-all duration-500"
+                          style={{ width: `${rec.percentage}%` }}
+                        ></div>
+                      </div>
+                      <span className="text-sm font-medium text-primary-400">
+                        {rec.percentage}%
+                      </span>
+                    </div>
                   </div>
+
+                  {/* LIME Explanation - Only for top 2 */}
+                  {explanation && index < 2 && (
+                    <div className="mt-4 pt-4 border-t border-[#555555]">
+                      <h4 className="text-sm font-semibold text-white mb-3 uppercase">
+                        Why this recommendation?
+                      </h4>
+                      <div className="space-y-2">
+                        {explanation.featureImportances.slice(0, 3).map((feat: any, idx: number) => (
+                          <div key={idx} className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="text-xs text-[#b0b0b0]">
+                                  {feat.feature}: <span className="text-white">{feat.baseValue}</span>
+                                </span>
+                                <span className="text-xs font-medium text-white">
+                                  {feat.importance.toFixed(0)}%
+                                </span>
+                              </div>
+                              <div className="w-full bg-[#444444] rounded-full h-2">
+                                <div
+                                  className="bg-[#DAF612] h-2 rounded-full transition-all duration-300"
+                                  style={{ width: `${feat.importance}%` }}
+                                ></div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
           
           {/* All Probabilities Chart */}

@@ -151,7 +151,7 @@ function App() {
       </TabPanel>
 
       <TabPanel value={tabValue} index={3}>
-        <PredictionQuiz showPercentages={true} branding="admin" />
+        <PredictionQuiz showPercentages={true} branding="admin" showExplanations={true} maxRecommendations={2} />
       </TabPanel>
 
       <TabPanel value={tabValue} index={4}>

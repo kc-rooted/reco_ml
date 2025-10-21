@@ -24,8 +24,23 @@ export interface ShaftRecommendation {
   percentage: number;
 }
 
+export interface FeatureImportance {
+  feature: string;
+  importance: number;
+  direction: 'positive' | 'negative';
+  baseValue: string | number;
+}
+
+export interface ShaftExplanation {
+  shaftName: string;
+  shaftIndex: number;
+  probability: number;
+  featureImportances: FeatureImportance[];
+}
+
 export interface PredictionResult {
   recommendations: ShaftRecommendation[];
+  explanations?: ShaftExplanation[];
   chartData?: any[];
   allProbabilities?: number[];
 }
@@ -37,6 +52,9 @@ export interface PredictionQuizProps {
   submitButtonText?: string;
   apiEndpoint?: string;
   className?: string;
+  maxRecommendations?: number;
+  showExplanations?: boolean;
+  renderFooter?: () => React.ReactNode;
 }
 
 export default function PredictionQuiz({
@@ -45,7 +63,10 @@ export default function PredictionQuiz({
   onComplete,
   submitButtonText = 'Get Recommendations',
   apiEndpoint = '/api/predict',
-  className = ''
+  className = '',
+  maxRecommendations,
+  showExplanations = false,
+  renderFooter
 }: PredictionQuizProps) {
   const [userAnswers, setUserAnswers] = useState<UserAnswers>({
     swing_speed: '96-105',
@@ -104,12 +125,14 @@ export default function PredictionQuiz({
 
   const theme = colors[branding];
 
+  console.log('PredictionQuiz rendering - VERSION 2.0 - branding:', branding, 'showPercentages:', showPercentages);
+
   return (
-    <div className={`grid grid-cols-1 xl:grid-cols-2 gap-6 ${className}`}>
+    <div className={`grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-6 ${className}`}>
       {/* Input Panel */}
-      <div className={`${theme.background} rounded-3xl p-8`}>
-        <h2 className={`text-2xl font-bold mb-6 ${theme.text} uppercase`}>
-          {branding === 'admin' ? 'Test Prediction' : 'Find Your Perfect Shaft'}
+      <div className={`${theme.background} rounded-3xl p-6 md:p-8`}>
+        <h2 className={`text-xl md:text-2xl font-bold mb-4 md:mb-6 ${theme.text} uppercase`}>
+          {branding === 'admin' ? 'Your Details' : 'Find Your Perfect Shaft'}
         </h2>
 
         {error && (
@@ -121,7 +144,7 @@ export default function PredictionQuiz({
         <div className="space-y-6">
           {/* Swing Speed */}
           <div>
-            <label className={`block text-sm font-medium ${theme.text} mb-2 uppercase`}>
+            <label className={`block text-xs md:text-sm font-medium ${theme.text} mb-2 uppercase`}>
               Swing Speed
             </label>
             <select
@@ -139,7 +162,7 @@ export default function PredictionQuiz({
 
           {/* Shot Shape */}
           <div>
-            <label className={`block text-sm font-medium ${theme.text} mb-2 uppercase`}>
+            <label className={`block text-xs md:text-sm font-medium ${theme.text} mb-2 uppercase`}>
               Current Shot Shape
             </label>
             <select
@@ -155,7 +178,7 @@ export default function PredictionQuiz({
 
           {/* Shot Shape Preference */}
           <div>
-            <label className={`block text-sm font-medium ${theme.text} mb-2 uppercase`}>
+            <label className={`block text-xs md:text-sm font-medium ${theme.text} mb-2 uppercase`}>
               Shot Shape Preference: {userAnswers.shot_shape_slider.toFixed(2)}
             </label>
             <div className={`relative flex justify-between items-center text-xs ${theme.textSecondary} mb-3 uppercase`}>
@@ -180,7 +203,7 @@ export default function PredictionQuiz({
 
           {/* Trajectory Preference */}
           <div>
-            <label className={`block text-sm font-medium ${theme.text} mb-2 uppercase`}>
+            <label className={`block text-xs md:text-sm font-medium ${theme.text} mb-2 uppercase`}>
               Trajectory Preference: {userAnswers.trajectory_slider.toFixed(2)}
             </label>
             <div className={`relative flex justify-between items-center text-xs ${theme.textSecondary} mb-3 uppercase`}>
@@ -205,7 +228,7 @@ export default function PredictionQuiz({
 
           {/* Feel Preference */}
           <div>
-            <label className={`block text-sm font-medium ${theme.text} mb-2 uppercase`}>
+            <label className={`block text-xs md:text-sm font-medium ${theme.text} mb-2 uppercase`}>
               Feel Preference: {userAnswers.feel_slider.toFixed(2)}
             </label>
             <div className={`relative flex justify-between items-center text-xs ${theme.textSecondary} mb-3 uppercase`}>
@@ -232,7 +255,7 @@ export default function PredictionQuiz({
           <button
             onClick={handlePredict}
             disabled={loading}
-            className={`w-full ${theme.primary} ${theme.primaryHover} disabled:bg-gray-600 disabled:cursor-not-allowed ${theme.primaryText} font-medium py-4 px-6 rounded-2xl transition-colors duration-200 flex items-center justify-center space-x-2 uppercase`}
+            className={`w-full ${theme.primary} ${theme.primaryHover} disabled:bg-gray-600 disabled:cursor-not-allowed ${theme.primaryText} font-medium py-4 px-6 rounded-2xl transition-colors duration-200 flex items-center justify-center space-x-2 uppercase text-sm md:text-base`}
           >
             {loading ? (
               <>
@@ -248,58 +271,93 @@ export default function PredictionQuiz({
 
       {/* Results Panel */}
       {predictions && (
-        <div className={`${theme.background} rounded-3xl p-8`}>
-          <h2 className={`text-2xl font-bold mb-6 ${theme.text} uppercase`}>Recommendations</h2>
+        <div className={`${theme.background} rounded-3xl p-6 md:p-8`}>
+          <h2 className={`text-xl md:text-2xl font-bold mb-4 md:mb-6 ${theme.text} uppercase`}>Recommendations</h2>
 
           {/* Top Recommendations */}
           <div className="space-y-4 mb-8">
-            {predictions.recommendations.map((rec: ShaftRecommendation, index: number) => (
-              <div key={index} className={`${theme.cardBg} rounded-2xl p-6`}>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center flex-1">
-                    <div
-                      className="w-3 h-12 rounded-xl mr-4"
-                      style={{
-                        backgroundColor: rec.name.toLowerCase().includes('blue') ? '#9dc1d0' :
-                                       rec.name.toLowerCase().includes('red') ? '#f65d4a' :
-                                       rec.name.toLowerCase().includes('green') ? '#0c8919' :
-                                       '#6b7280'
-                      }}
-                    ></div>
-                    <div>
-                      <h3 className={`text-lg font-semibold ${theme.text} mb-1`}>
-                        #{index + 1} {rec.name}
-                      </h3>
-                      {showPercentages && (
-                        <p className={theme.textSecondary}>
-                          Confidence: {rec.percentage}%
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  {showPercentages && (
-                    <div className="w-24 text-right">
-                      <div className={`w-full ${theme.inputBg} rounded-full h-3 mb-2`}>
-                        <div
-                          className="bg-[#DAF612] h-3 rounded-full transition-all duration-500"
-                          style={{ width: `${rec.percentage}%` }}
-                        ></div>
+            {predictions.recommendations.slice(0, maxRecommendations || predictions.recommendations.length).map((rec: ShaftRecommendation, index: number) => {
+              const explanation = showExplanations && predictions.explanations ? predictions.explanations[index] : null;
+
+              return (
+                <div key={index} className={`${theme.cardBg} rounded-2xl p-4 md:p-6`}>
+                  <div className="flex items-center justify-between mb-3 md:mb-4">
+                    <div className="flex items-center flex-1">
+                      <div
+                        className="w-2 md:w-3 h-10 md:h-12 rounded-xl mr-3 md:mr-4"
+                        style={{
+                          backgroundColor: rec.name.toLowerCase().includes('blue') ? '#9dc1d0' :
+                                         rec.name.toLowerCase().includes('red') ? '#f65d4a' :
+                                         rec.name.toLowerCase().includes('green') ? '#0c8919' :
+                                         '#6b7280'
+                        }}
+                      ></div>
+                      <div>
+                        <h3 className={`text-base md:text-lg font-semibold ${theme.text} mb-1`}>
+                          #{index + 1} {rec.name}
+                        </h3>
+                        {showPercentages && (
+                          <p className={theme.textSecondary}>
+                            Confidence: {rec.percentage}%
+                          </p>
+                        )}
                       </div>
-                      <span className="text-sm font-medium text-primary-400">
-                        {rec.percentage}%
-                      </span>
+                    </div>
+                    {showPercentages && (
+                      <div className="w-24 text-right">
+                        <div className={`w-full ${theme.inputBg} rounded-full h-3 mb-2`}>
+                          <div
+                            className="bg-[#DAF612] h-3 rounded-full transition-all duration-500"
+                            style={{ width: `${rec.percentage}%` }}
+                          ></div>
+                        </div>
+                        <span className="text-sm font-medium text-primary-400">
+                          {rec.percentage}%
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* LIME Explanation */}
+                  {explanation && (
+                    <div className={`mt-4 pt-4 border-t ${branding === 'admin' ? 'border-[#555555]' : 'border-gray-200'}`}>
+                      <h4 className={`text-sm font-semibold ${theme.text} mb-3 uppercase`}>
+                        Why this recommendation?
+                      </h4>
+                      <div className="space-y-2">
+                        {explanation.featureImportances.slice(0, 3).map((feat, idx) => (
+                          <div key={idx} className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <div className="flex items-center justify-between mb-1">
+                                <span className={`text-xs ${theme.textSecondary}`}>
+                                  {feat.feature}: <span className={theme.text}>{feat.baseValue}</span>
+                                </span>
+                                <span className={`text-xs font-medium ${theme.text}`}>
+                                  {feat.importance.toFixed(0)}%
+                                </span>
+                              </div>
+                              <div className={`w-full ${theme.inputBg} rounded-full h-2`}>
+                                <div
+                                  className="bg-[#DAF612] h-2 rounded-full transition-all duration-300"
+                                  style={{ width: `${feat.importance}%` }}
+                                ></div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* All Probabilities Chart - Only show in admin */}
           {showPercentages && predictions.chartData && (
             <div>
-              <h3 className={`text-lg font-semibold mb-4 ${theme.text} uppercase`}>All Shaft Probabilities</h3>
-              <div className={`${theme.cardBg} rounded-2xl p-6`}>
+              <h3 className={`text-base md:text-lg font-semibold mb-3 md:mb-4 ${theme.text} uppercase`}>All Shaft Probabilities</h3>
+              <div className={`${theme.cardBg} rounded-2xl p-4 md:p-6`}>
                 <ResponsiveContainer width="100%" height={400}>
                   <BarChart data={predictions.chartData} margin={{ bottom: 80 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
@@ -334,6 +392,9 @@ export default function PredictionQuiz({
               </div>
             </div>
           )}
+
+          {/* Custom Footer (e.g., Next Step button) */}
+          {renderFooter && renderFooter()}
         </div>
       )}
     </div>

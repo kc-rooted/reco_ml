@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+@source "../../shared-ui/src";
 
 @layer base {
   * {
@@ -111,5 +112,30 @@
     line-height: 1.1em !important;
     font-weight: 800 !important;
     text-transform: uppercase !important;
+  }
+}
+
+@layer utilities {
+  /* Custom slider styles with higher specificity */
+  .slider {
+    background-color: #444444;
+  }
+
+  .slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #DAF612;
+    cursor: pointer;
+  }
+
+  .slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #DAF612;
+    cursor: pointer;
+    border: none;
   }
 }

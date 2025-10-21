@@ -16,7 +16,9 @@ import {
   compileModel,
   makePrediction,
   getTopRecommendations,
-  SHAFT_NAMES
+  SHAFT_NAMES,
+  explainPrediction,
+  ShaftExplanation
 } from '@gears/core';
 
 export class TrainingController {
@@ -184,8 +186,23 @@ export class TrainingController {
     const probabilities = await makePrediction(this.currentModel, userAnswers);
     const recommendations = getTopRecommendations(probabilities, 3);
 
+    // Generate LIME explanations for top 2 recommendations
+    const explanations: ShaftExplanation[] = [];
+    for (let i = 0; i < Math.min(2, recommendations.length); i++) {
+      const rec = recommendations[i];
+      const explanation = await explainPrediction(
+        this.currentModel,
+        userAnswers,
+        rec.index,
+        probabilities
+      );
+      explanation.shaftName = rec.name;
+      explanations.push(explanation);
+    }
+
     return {
       recommendations,
+      explanations,
       allProbabilities: probabilities,
       chartData: probabilities.map((prob, index) => ({
         shaft: SHAFT_NAMES[index],

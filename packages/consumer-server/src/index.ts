@@ -1,4 +1,10 @@
 import './util-patch'; // Must be first to fix TensorFlow.js util issue
+import dotenv from 'dotenv';
+import path from 'path';
+
+// Load environment variables from .env file
+dotenv.config({ path: path.join(__dirname, '../.env') });
+
 import express from 'express';
 import cors from 'cors';
 import * as tf from '@tensorflow/tfjs-node';
@@ -11,12 +17,14 @@ import {
   getLatestModelPath
 } from '@gears/core';
 import { BigQueryService, UserDetails } from './services/bigquery';
+import { EmailService, DriverDetails, ShaftRecommendation } from './services/email';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 const bigQueryService = new BigQueryService();
+const emailService = new EmailService();
 let currentModel: tf.Sequential | null = null;
 
 // Load the latest trained model on startup
@@ -95,44 +103,140 @@ app.post('/api/submit', async (req, res) => {
   try {
     const {
       userDetails,
+      driverDetails,
       quizAnswers,
       recommendations,
       allProbabilities
     } = req.body as {
       userDetails: UserDetails;
+      driverDetails: DriverDetails;
       quizAnswers: UserAnswers;
-      recommendations: any[];
+      recommendations: ShaftRecommendation[];
       allProbabilities: number[];
     };
 
     // Validate required fields
-    if (!userDetails || !quizAnswers || !recommendations) {
+    if (!userDetails || !driverDetails || !quizAnswers || !recommendations) {
       return res.status(400).json({
-        error: 'Missing required fields: userDetails, quizAnswers, recommendations'
+        error: 'Missing required fields: userDetails, driverDetails, quizAnswers, recommendations'
       });
     }
 
-    // Generate session ID
-    const sessionId = uuidv4();
+    let customerId, recommendationId, orderId;
+    let bigQueryError = null;
+    let emailError = null;
 
-    // Save to BigQuery
-    await bigQueryService.saveRecommendation(
-      userDetails,
-      quizAnswers,
-      recommendations,
-      allProbabilities || [],
-      sessionId
-    );
+    // Try to save to BigQuery (don't fail the whole request if this fails)
+    try {
+      const result = await bigQueryService.saveRecommendation(
+        userDetails,
+        driverDetails,
+        quizAnswers,
+        recommendations,
+        allProbabilities || [],
+        undefined // LIME explanations (not generated in consumer flow yet)
+      );
+      customerId = result.customerId;
+      recommendationId = result.recommendationId;
+      orderId = result.orderId;
+    } catch (error: any) {
+      console.error('⚠️  BigQuery save failed, but continuing with email:', error.message);
+      bigQueryError = error.message;
+    }
+
+    // Always try to send notification email, even if BigQuery failed
+    try {
+      await emailService.sendNotification(
+        userDetails,
+        driverDetails,
+        quizAnswers,
+        recommendations
+      );
+    } catch (error: any) {
+      console.error('⚠️  Email notification failed:', error.message);
+      emailError = error.message;
+    }
+
+    // Return success if at least email sent, or partial success
+    if (emailError && bigQueryError) {
+      return res.status(500).json({
+        error: 'Both BigQuery and email failed',
+        details: { bigQueryError, emailError }
+      });
+    }
 
     res.json({
       success: true,
-      sessionId,
-      message: 'Your recommendation has been saved successfully!'
+      customerId,
+      recommendationId,
+      orderId,
+      message: 'Your recommendation has been saved successfully!',
+      warnings: {
+        bigQuery: bigQueryError || undefined,
+        email: emailError || undefined
+      }
     });
   } catch (error: any) {
     console.error('Submission error:', error);
     res.status(500).json({
       error: error.message || 'Failed to save recommendation'
+    });
+  }
+});
+
+// Test email endpoint - sends sample email for design testing
+app.post('/api/test-email', async (req, res) => {
+  try {
+    const testUserDetails: UserDetails = {
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      phone: '555-1234',
+      shippingAddress: {
+        street: '123 Main St',
+        city: 'San Francisco',
+        state: 'CA',
+        zip: '94102',
+        country: 'USA'
+      },
+      handicap: 12
+    };
+
+    const testDriverDetails: DriverDetails = {
+      brand: 'TaylorMade',
+      model: 'Stealth 2',
+      currentShaft: 'Project X 6.0',
+      shaftSatisfaction: 7
+    };
+
+    const testQuizAnswers: UserAnswers = {
+      swing_speed: '96-105',
+      current_shot_shape: 'straight',
+      shot_shape_slider: 0,
+      trajectory_slider: 0.5,
+      feel_slider: -0.3
+    };
+
+    const testRecommendations: ShaftRecommendation[] = [
+      { name: 'Blue 65', percentage: 45 },
+      { name: 'Red 75', percentage: 30 },
+      { name: 'Green 55', percentage: 15 }
+    ];
+
+    await emailService.sendNotification(
+      testUserDetails,
+      testDriverDetails,
+      testQuizAnswers,
+      testRecommendations
+    );
+
+    res.json({
+      success: true,
+      message: 'Test email sent successfully!'
+    });
+  } catch (error: any) {
+    console.error('Test email error:', error);
+    res.status(500).json({
+      error: error.message || 'Failed to send test email'
     });
   }
 });

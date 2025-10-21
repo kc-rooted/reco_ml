@@ -3,6 +3,11 @@ dist/
 *.log
 .DS_Store
 .env
+.env.local
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
 models/
 !models/.gitkeep
 data/processed/
