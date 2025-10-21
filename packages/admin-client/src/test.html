@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tailwind Test</title>
+  <link href="./index.css" rel="stylesheet">
+</head>
+<body>
+  <div class="min-h-screen bg-gray-900 text-white p-8">
+    <h1 class="text-4xl font-bold mb-8 text-center">Tailwind CSS Test</h1>
+    
+    <div class="max-w-7xl mx-auto">
+      <!-- Test basic card -->
+      <div class="bg-gray-800 rounded-3xl p-8 mb-6">
+        <h2 class="text-2xl font-bold mb-4">Card with bg-gray-800</h2>
+        <p>This should have a gray background</p>
+      </div>
+      
+      <!-- Test backdrop blur -->
+      <div class="bg-gray-800 bg-opacity-70 backdrop-blur-sm rounded-3xl p-8 mb-6">
+        <h2 class="text-2xl font-bold mb-4">Card with backdrop-blur</h2>
+        <p>This should have backdrop blur effect</p>
+      </div>
+      
+      <!-- Test button -->
+      <button class="bg-green-400 hover:bg-green-500 text-gray-900 font-medium py-4 px-6 rounded-xl">
+        Test Button
+      </button>
+    </div>
+  </div>
+</body>
+</html>

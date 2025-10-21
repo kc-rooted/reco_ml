@@ -1,21 +1,22 @@
 {
   "name": "golf-shaft-recommendation-ml",
   "version": "1.0.0",
-  "description": "Golf shaft recommendation machine learning model using TensorFlow.js",
-  "main": "dist/index.js",
+  "description": "Golf shaft recommendation machine learning model using TensorFlow.js - Monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "build": "tsc",
-    "train": "npm run build && node dist/training/train-model.js",
-    "predict": "npm run build && node dist/inference/predict.js",
-    "dev": "ts-node src/training/train-model.ts",
-    "server": "npm run build && node dist/server/index.js",
-    "server:dev": "ts-node src/server/index.ts",
-    "client": "vite",
-    "client:build": "vite build",
-    "start": "concurrently \"npm run server:dev\" \"npm run client\"",
-    "test": "jest",
-    "lint": "eslint src/**/*.ts",
-    "typecheck": "tsc --noEmit"
+    "dev:admin": "concurrently \"npm run dev -w @gears/admin-server\" \"npm run dev -w @gears/admin-client\"",
+    "dev:consumer": "concurrently \"npm run dev -w @gears/consumer-server\" \"npm run dev -w @gears/consumer-client\"",
+    "build:core": "npm run build -w @gears/core",
+    "build:shared-ui": "npm run build -w @gears/shared-ui",
+    "build:admin": "npm run build:core && npm run build:shared-ui && npm run build -w @gears/admin-server && npm run build -w @gears/admin-client",
+    "build:consumer": "npm run build:core && npm run build:shared-ui && npm run build -w @gears/consumer-server && npm run build -w @gears/consumer-client",
+    "build": "npm run build:core && npm run build:shared-ui && npm run build:admin && npm run build:consumer",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present"
   },
   "dependencies": {
     "@tensorflow/tfjs-node": "4.10.0",

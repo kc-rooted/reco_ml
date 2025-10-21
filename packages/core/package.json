@@ -1,0 +1,27 @@
+{
+  "name": "@gears/core",
+  "version": "1.0.0",
+  "description": "Core ML logic for golf shaft recommendations",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./inference": "./dist/inference/index.js",
+    "./types": "./dist/types/index.js",
+    "./training": "./dist/training/index.js",
+    "./utils": "./dist/utils/index.js"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs-node": "4.10.0",
+    "papaparse": "^5.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/papaparse": "^5.3.14",
+    "typescript": "^5.3.3"
+  }
+}
