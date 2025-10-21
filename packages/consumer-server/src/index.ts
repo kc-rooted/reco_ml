@@ -21,7 +21,8 @@ let currentModel: tf.Sequential | null = null;
 // Load the latest trained model on startup
 async function loadModel() {
   try {
-    const modelPath = getLatestModelPath();
+    // Models are in monorepo root, go up two levels from packages/consumer-server
+    const modelPath = 'file://../../models/latest/model.json';
     currentModel = await tf.loadLayersModel(modelPath) as tf.Sequential;
     console.log(`✅ Model loaded from: ${modelPath}`);
   } catch (error) {

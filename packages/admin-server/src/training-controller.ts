@@ -33,19 +33,21 @@ export class TrainingController {
   }
 
   private async loadTrainingData() {
-    const dataPath = path.join(process.cwd(), 'data', 'golf-shaft-data.csv');
+    // Data is in monorepo root, go up two levels from packages/admin-server
+    const dataPath = path.join(process.cwd(), '..', '..', 'data', 'golf-shaft-data.csv');
     this.trainingData = loadCSVData(dataPath);
     validateTrainingData(this.trainingData);
   }
 
   private async loadExistingModel() {
     try {
-      const modelPath = 'file://./models/latest';
+      // Models are in monorepo root, go up two levels from packages/admin-server
+      const modelPath = 'file://../../models/latest';
       this.currentModel = await tf.loadLayersModel(`${modelPath}/model.json`) as tf.Sequential;
       console.log('✅ Loaded existing trained model from', modelPath);
-      
+
       // Load training history if it exists
-      const historyPath = path.join(process.cwd(), 'models', 'latest', 'history.json');
+      const historyPath = path.join(process.cwd(), '..', '..', 'models', 'latest', 'history.json');
       try {
         const fs = await import('fs');
         if (fs.existsSync(historyPath)) {
@@ -148,13 +150,14 @@ export class TrainingController {
 
       console.log('📡 Training completion event sent to clients');
 
-      const modelPath = 'file://./models/latest';
+      // Save model to monorepo root (go up two levels)
+      const modelPath = 'file://../../models/latest';
       await this.currentModel.save(modelPath);
 
       // Save training history
       try {
         const fs = await import('fs');
-        const historyPath = path.join(process.cwd(), 'models', 'latest', 'history.json');
+        const historyPath = path.join(process.cwd(), '..', '..', 'models', 'latest', 'history.json');
         fs.writeFileSync(historyPath, JSON.stringify(this.trainingHistory, null, 2));
         console.log('💾 Training history saved to', historyPath);
       } catch (error) {
