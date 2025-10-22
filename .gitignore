@@ -8,7 +8,7 @@ dist/
 !package.json
 !package-lock.json
 !tsconfig.json
-models/
-!models/.gitkeep
+!models/**/*.json
+!models/**/*.bin
 data/processed/
 !data/processed/.gitkeep
