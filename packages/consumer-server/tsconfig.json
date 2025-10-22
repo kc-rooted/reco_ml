@@ -3,10 +3,10 @@
   "compilerOptions": {
     "outDir": "./dist",
     "types": ["node"],
-    "baseUrl": ".",
+    "baseUrl": "../..",
     "paths": {
-      "@gears/core": ["../core/dist/index"],
-      "@gears/core/*": ["../core/dist/*"]
+      "@gears/core": ["packages/core/dist"],
+      "@gears/core/*": ["packages/core/dist/*"]
     }
   },
   "include": ["src/**/*"],
