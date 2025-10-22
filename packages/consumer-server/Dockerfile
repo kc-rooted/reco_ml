@@ -11,10 +11,12 @@ COPY packages/core/package*.json ./packages/core/
 # Install dependencies
 RUN npm ci
 
-# Copy source code
+# Copy source code and config files
 COPY packages/consumer-server ./packages/consumer-server
 COPY packages/core ./packages/core
 COPY tsconfig.json ./
+COPY tsconfig.base.json ./
+COPY config ./config
 
 # Build the packages
 RUN npm run build -w @gears/core
