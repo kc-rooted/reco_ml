@@ -20,6 +20,11 @@ COPY config ./config
 
 # Build the packages
 RUN npm run build -w @gears/core
+
+# Verify core package is available
+RUN ls -la /app/packages/core/dist/ && \
+    ls -la /app/node_modules/@gears/ || true
+
 RUN npm run build -w @gears/consumer-server
 
 # Production stage
