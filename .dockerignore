@@ -21,4 +21,6 @@ packages/shared-ui
 !packages/core
 !models
 !tsconfig.json
+!tsconfig.base.json
 !package*.json
+!config
