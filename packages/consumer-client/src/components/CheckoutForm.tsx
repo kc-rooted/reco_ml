@@ -87,15 +87,9 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
             </div>
           </div>
           <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-white uppercase">Thank You!</h2>
-          <p className="text-base md:text-lg text-[#b0b0b0] mb-6 md:mb-8">
+          <p className="text-base md:text-lg text-[#b0b0b0]">
             Your shaft recommendations have been submitted successfully. We'll be in touch shortly!
           </p>
-          <button
-            onClick={onBack}
-            className="bg-[#DAF612] hover:bg-[#c5e010] text-gray-900 font-medium py-3 px-6 md:py-4 md:px-8 rounded-2xl transition-colors duration-200 uppercase text-sm md:text-base"
-          >
-            Back to Quiz
-          </button>
         </div>
       </div>
     );

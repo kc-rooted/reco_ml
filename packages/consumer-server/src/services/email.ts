@@ -44,7 +44,7 @@ export class EmailService {
       feel_slider: 'Feel Preference'
     };
 
-    return `${labels[key] || key}: ${value}`;
+    return `<strong>${labels[key] || key}:</strong> ${value}`;
   }
 
   private buildEmailText(

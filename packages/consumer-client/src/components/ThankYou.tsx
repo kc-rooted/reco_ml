@@ -55,13 +55,6 @@ export default function ThankYou({ recommendations, sessionId }: ThankYouProps) 
             Our team will review your recommendation and reach out to you shortly to complete your order.
           </p>
         </div>
-
-        <button
-          onClick={() => window.location.reload()}
-          className="mt-8 bg-[#DAF612] hover:bg-[#c5e010] text-gray-900 font-medium py-3 px-8 rounded-2xl transition-colors uppercase"
-        >
-          Start Another Recommendation
-        </button>
       </div>
     </div>
   );
