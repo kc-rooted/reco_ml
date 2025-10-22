@@ -12,8 +12,6 @@
     "declarationMap": true,
     "sourceMap": true,
     "moduleResolution": "node",
-    "composite": true,
-    "incremental": true,
     "paths": {
       "@gears/core": ["./packages/core/src"],
       "@gears/core/*": ["./packages/core/src/*"],
