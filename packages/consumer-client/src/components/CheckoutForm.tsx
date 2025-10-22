@@ -50,7 +50,7 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
             zip: formData.zipCode,
             country: formData.country
           },
-          handicap: formData.handicap ? parseFloat(formData.handicap) : undefined
+          handicap: formData.handicap || undefined
         },
         driverDetails: {
           brand: formData.driverBrand,

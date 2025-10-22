@@ -52,7 +52,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
         zip: formData.zip,
         country: formData.country
       },
-      handicap: formData.handicap ? parseFloat(formData.handicap) : undefined
+      handicap: formData.handicap || undefined
     };
 
     onSubmit(userDetails);

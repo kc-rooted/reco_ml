@@ -14,7 +14,7 @@ export interface UserDetails {
   email?: string;
   phone?: string;
   shippingAddress: ShippingAddress;
-  handicap?: number;
+  handicap?: string | number;
 }
 
 export interface DriverDetails {
