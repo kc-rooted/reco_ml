@@ -19,12 +19,7 @@ COPY tsconfig.base.json ./
 COPY config ./config
 
 # Build the packages
-RUN npm run build -w @gears/core 2>&1 | tee /tmp/core-build.log && \
-    echo "=== Core build complete ===" && \
-    ls -R /app/packages/core/dist/ && \
-    echo "=== Checking for output files ===" && \
-    find /app/packages/core/dist/ -type f
-
+RUN npm run build -w @gears/core
 RUN npm run build -w @gears/consumer-server
 
 # Production stage
