@@ -19,7 +19,7 @@ CREATE TABLE `gears-dtc.shaft_recommendations.customers` (
   shipping_country STRING NOT NULL,
 
   -- Golf Info
-  handicap FLOAT64,
+  handicap STRING, -- Can be numeric (12.5) or with plus sign (+2, +4)
 
   -- Metadata
   created_at TIMESTAMP NOT NULL,
