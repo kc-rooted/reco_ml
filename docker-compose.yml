@@ -8,7 +8,7 @@ services:
     ports:
       - "3002:3002"
     volumes:
-      # Mount the models directory - YOU MUST UPLOAD models/latest/* TO YOUR SERVER
+      # Mount the models directory from the repository
       # Path on host : Path in container
       - ./models:/app/models
     environment:

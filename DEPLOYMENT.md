@@ -9,59 +9,35 @@ This guide explains how to deploy the consumer server to Portainer using a GitHu
 3. Google service account JSON key file
 4. Brevo SMTP credentials
 
-## Step 1: Push to GitHub
+## Step 1: Verify Code is on GitHub
 
+The repository should already be pushed with all files including the ML models:
 ```bash
-# Initialize git (if not already done)
-git init
-
-# Add remote
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
-
-# Add and commit files
-git add .
-git commit -m "Initial commit - OVVIO DTC Consumer Server"
-
-# Push to GitHub
-git push -u origin master
+git push
 ```
 
-## Step 2: Prepare Model Files
-
-**IMPORTANT**: The trained ML models are NOT in the git repository (they're too large). You'll upload them via Portainer during stack creation.
-
-Your local `models` directory should contain:
+Your repository includes:
 ```
 models/
 └── latest/
+    ├── history.json
     ├── model.json
-    └── model.weights.bin
+    └── weights.bin
 ```
 
-You'll upload these files in Step 3 using Portainer's "Additional paths" feature.
-
-## Step 3: Create Stack in Portainer
+## Step 2: Create Stack in Portainer
 
 1. Log in to Portainer
 2. Go to **Stacks** → **Add stack**
 3. Name: `ovvio-dtc-consumer`
 4. Build method: **Git Repository**
-5. Repository URL: `https://github.com/YOUR_USERNAME/YOUR_REPO`
+5. Repository URL: `https://github.com/kc-rooted/reco_ml`
 6. Repository reference: `refs/heads/master`
 7. Compose path: `docker-compose.yml`
 
-### Upload Models via Additional Paths
+**That's it!** The models are now in Git, so no additional file uploads needed.
 
-Scroll down to the **Additional paths** section:
-
-1. Click **+ Add file**
-2. **Path in repository**: `models`
-3. Click **Select file** and choose your entire `models` directory (with `latest/model.json` and `latest/model.weights.bin` inside)
-4. This will make the models available to the Docker build context
-
-**Note**: The `models` folder should contain the `latest` subdirectory with your model files.
-
-## Step 4: Configure Environment Variables
+## Step 3: Configure Environment Variables
 
 In the Portainer stack creation page, add these environment variables:
 
@@ -110,13 +86,13 @@ The service account JSON file looks like this:
    ```
 5. Paste the single-line JSON as the value for `GOOGLE_SERVICE_ACCOUNT_JSON`
 
-## Step 5: Deploy
+## Step 4: Deploy
 
 1. Click **Deploy the stack**
 2. Wait for the build to complete
 3. Monitor logs in Portainer
 
-## Step 6: Verify Deployment
+## Step 5: Verify Deployment
 
 Check the container logs for:
 
@@ -127,7 +103,7 @@ Check the container logs for:
 🚀 Consumer server running on http://localhost:3002
 ```
 
-## Step 7: Configure Reverse Proxy (Optional)
+## Step 6: Configure Reverse Proxy (Optional)
 
 If you want to expose the service publicly:
 
@@ -215,24 +191,16 @@ curl -X POST https://your-domain.com/api/predict \
   -d '{"userAnswers": {...}}'
 ```
 
-## Alternative: Upload Models via SSH (for updates)
+## Updating Models
 
-If you need to update models after deployment or prefer SSH:
+To update the ML models:
 
-```bash
-# SSH into your Portainer server
-ssh user@your-server
-
-# Navigate to the stack directory
-cd /var/lib/docker/volumes/STACK_NAME_models-data/_data
-
-# Create the directory structure
-mkdir -p latest
-
-# Exit SSH, then from your local machine:
-scp -r models/latest/* user@your-server:/var/lib/docker/volumes/STACK_NAME_models-data/_data/latest/
-
-# Restart the stack in Portainer to reload models
-```
-
-Replace `STACK_NAME` with your actual stack name (e.g., `ovvio-dtc-consumer`).
+1. Train new model locally
+2. Overwrite files in `models/latest/`
+3. Commit and push:
+   ```bash
+   git add models/
+   git commit -m "Update ML models"
+   git push
+   ```
+4. In Portainer: Go to stack → **Pull and redeploy**
