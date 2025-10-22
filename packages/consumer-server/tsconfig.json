@@ -3,11 +3,8 @@
   "compilerOptions": {
     "outDir": "./dist",
     "types": ["node"],
-    "baseUrl": "../..",
-    "paths": {
-      "@gears/core": ["packages/core/dist"],
-      "@gears/core/*": ["packages/core/dist/*"]
-    }
+    "paths": {},
+    "skipLibCheck": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
