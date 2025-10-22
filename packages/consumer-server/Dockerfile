@@ -53,11 +53,11 @@ RUN npm ci --production
 COPY --from=builder /app/packages/consumer-server/dist ./packages/consumer-server/dist
 COPY --from=builder /app/packages/core/dist ./packages/core/dist
 
-# Create directories
-RUN mkdir -p /app/models /app/secrets
+# Copy model files from repository
+COPY models ./models
 
-# Models will be mounted as a volume in production
-# For local testing, you can mount: -v ./models:/app/models
+# Create directories
+RUN mkdir -p /app/secrets
 
 # Expose port
 EXPOSE 3002
