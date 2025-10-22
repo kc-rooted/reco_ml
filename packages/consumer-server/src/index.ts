@@ -76,7 +76,7 @@ app.post('/api/predict', async (req, res) => {
     }
 
     const probabilities = await makePrediction(currentModel, userAnswers);
-    const recommendations = getTopRecommendations(probabilities, 3);
+    const recommendations = getTopRecommendations(probabilities, 2);
 
     // For consumer, we still calculate chartData but it won't be shown in UI
     // This is useful for debugging and potential future use
