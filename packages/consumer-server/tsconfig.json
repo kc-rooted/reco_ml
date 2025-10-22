@@ -2,7 +2,11 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "types": ["node"]
+    "types": ["node"],
+    "paths": {
+      "@gears/core": ["../core/dist"],
+      "@gears/core/*": ["../core/dist/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
