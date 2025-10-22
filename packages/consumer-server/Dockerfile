@@ -22,8 +22,8 @@ COPY config ./config
 RUN npm run build -w @gears/core
 
 # Verify core package is available
-RUN ls -la /app/packages/core/dist/ && \
-    ls -la /app/node_modules/@gears/ || true
+RUN find /app/packages/core/dist/ -name "*.js" -o -name "*.d.ts" | head -20 && \
+    ls -la /app/node_modules/@gears/
 
 RUN npm run build -w @gears/consumer-server
 
