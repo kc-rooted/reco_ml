@@ -4,7 +4,7 @@
   "description": "Consumer-facing server for golf shaft recommendations",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc --build",
+    "build": "tsc",
     "dev": "ts-node src/index.ts",
     "start": "node dist/index.js",
     "typecheck": "tsc --noEmit"
