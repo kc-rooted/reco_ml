@@ -107,7 +107,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Name */}
           <div>
-            <label className="block text-sm font-medium text-white mb-2 uppercase">
+            <label className="block text-lg font-medium text-white mb-2 uppercase">
               Full Name *
             </label>
             <input
@@ -123,7 +123,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
 
           {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-white mb-2 uppercase">
+            <label className="block text-lg font-medium text-white mb-2 uppercase">
               Email
             </label>
             <input
@@ -138,7 +138,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
 
           {/* Phone */}
           <div>
-            <label className="block text-sm font-medium text-white mb-2 uppercase">
+            <label className="block text-lg font-medium text-white mb-2 uppercase">
               Phone
             </label>
             <input
@@ -157,7 +157,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-white mb-2 uppercase">
+                <label className="block text-lg font-medium text-white mb-2 uppercase">
                   Street Address *
                 </label>
                 <input
@@ -173,7 +173,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-white mb-2 uppercase">
+                  <label className="block text-lg font-medium text-white mb-2 uppercase">
                     City *
                   </label>
                   <input
@@ -188,7 +188,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-white mb-2 uppercase">
+                  <label className="block text-lg font-medium text-white mb-2 uppercase">
                     State *
                   </label>
                   <input
@@ -205,7 +205,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-white mb-2 uppercase">
+                  <label className="block text-lg font-medium text-white mb-2 uppercase">
                     ZIP Code *
                   </label>
                   <input
@@ -220,7 +220,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-white mb-2 uppercase">
+                  <label className="block text-lg font-medium text-white mb-2 uppercase">
                     Country
                   </label>
                   <input
@@ -237,17 +237,16 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
 
           {/* Handicap */}
           <div>
-            <label className="block text-sm font-medium text-white mb-2 uppercase">
+            <label className="block text-lg font-medium text-white mb-2 uppercase">
               Golf Handicap (Optional)
             </label>
             <input
-              type="number"
+              type="text"
               name="handicap"
               value={formData.handicap}
               onChange={handleChange}
               className="w-full bg-[#444444] rounded-xl pl-4 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary-400/20"
-              placeholder="12.5"
-              step="0.1"
+              placeholder="e.g., 12.5 or +2"
             />
           </div>
 

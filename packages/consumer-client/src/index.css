@@ -11,10 +11,10 @@
   
   html, body {
     height: 100%;
-    font-family: 'orbitron', 'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-    font-size: 21.6px;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    font-size: 25.92px;
   }
-  
+
   body {
     background-color: #010101;
     color: #ffffff;
@@ -22,19 +22,34 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'orbitron', sans-serif;
-    font-weight: 700;
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    letter-spacing: 1px;
   }
 
   button {
-    font-family: 'orbitron', sans-serif;
-    font-weight: 300;
-    letter-spacing: 0.5px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    letter-spacing: 1px;
   }
-  
+
   input, select, textarea {
-    font-family: 'orbitron', sans-serif;
-    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+  }
+
+  label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 1.2em;
+  }
+
+  span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    letter-spacing: 1px;
   }
 
   /* Custom slider styles */
@@ -97,25 +112,50 @@
 
   /* Quiz page font override */
   .quiz-font {
-    font-family: peridot-pe-variable, sans-serif !important;
-    font-variation-settings: "wght" 400, "wdth" 100, "ital" 0 !important;
+    font-family: 'Roboto', sans-serif !important;
   }
 
   .quiz-font * {
-    font-family: peridot-pe-variable, sans-serif !important;
-    font-variation-settings: "wght" 400, "wdth" 100, "ital" 0 !important;
+    font-family: 'Roboto', sans-serif !important;
   }
 
   .quiz-font h1, .quiz-font h2, .quiz-font h3, .quiz-font h4, .quiz-font h5, .quiz-font h6 {
-    font-family: peridot-pe-variable, sans-serif !important;
-    font-variation-settings: "wght" 800, "wdth" 82, "ital" 0 !important;
+    font-family: 'Bebas Neue', sans-serif !important;
     line-height: 1.1em !important;
-    font-weight: 800 !important;
+    font-weight: 400 !important;
     text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+  }
+
+  .quiz-font label {
+    font-family: 'Bebas Neue', sans-serif !important;
+    font-weight: 400 !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    font-size: 1.2em !important;
+  }
+
+  .quiz-font span {
+    font-family: 'Bebas Neue', sans-serif !important;
+    font-weight: 400 !important;
+    letter-spacing: 1px !important;
   }
 }
 
 @layer utilities {
+  /* Override Tailwind text sizes to be larger */
+  .text-sm {
+    font-size: 1rem !important; /* 25.92px with our base */
+  }
+
+  .text-base {
+    font-size: 1.125rem !important; /* 29.16px with our base */
+  }
+
+  .text-lg {
+    font-size: 1.25rem !important; /* 32.4px with our base */
+  }
+
   /* Custom slider styles with higher specificity */
   .slider {
     background-color: #444444;

@@ -143,10 +143,10 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
 
         {/* Driver Information */}
         <div className="mb-6 md:mb-8">
-          <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4 text-white uppercase">Current Driver</h3>
+          <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4 text-[#DAF612] uppercase">Current Driver</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
-              <label className="block text-xs md:text-sm font-medium text-white mb-2 uppercase">
+              <label className="block text-base md:text-lg font-medium text-white mb-2 uppercase">
                 Driver Brand *
               </label>
               <input
@@ -159,7 +159,7 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
               />
             </div>
             <div>
-              <label className="block text-xs md:text-sm font-medium text-white mb-2 uppercase">
+              <label className="block text-base md:text-lg font-medium text-white mb-2 uppercase">
                 Driver Model *
               </label>
               <input
@@ -173,7 +173,7 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
             </div>
           </div>
           <div className="mb-4">
-            <label className="block text-xs md:text-sm font-medium text-white mb-2 uppercase">
+            <label className="block text-base md:text-lg font-medium text-white mb-2 uppercase">
               What is your current Driver shaft *
             </label>
             <input
@@ -186,7 +186,7 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
             />
           </div>
           <div>
-            <label className="block text-xs md:text-sm font-medium text-white mb-2 uppercase">
+            <label className="block text-base md:text-lg font-medium text-white mb-2 uppercase">
               How Much Do you like your current shaft: {formData.shaftSatisfaction}
             </label>
             <div className="relative flex justify-between items-center text-xs text-[#b0b0b0] mb-3 uppercase">
@@ -212,10 +212,10 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
 
         {/* Personal Information */}
         <div className="mb-6 md:mb-8">
-          <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4 text-white uppercase">Personal Information</h3>
+          <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4 text-[#DAF612] uppercase">Personal Information</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
-              <label className="block text-xs md:text-sm font-medium text-white mb-2 uppercase">
+              <label className="block text-base md:text-lg font-medium text-white mb-2 uppercase">
                 First Name *
               </label>
               <input
@@ -227,7 +227,7 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
               />
             </div>
             <div>
-              <label className="block text-xs md:text-sm font-medium text-white mb-2 uppercase">
+              <label className="block text-base md:text-lg font-medium text-white mb-2 uppercase">
                 Last Name *
               </label>
               <input
@@ -240,7 +240,7 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
             </div>
           </div>
           <div className="mb-4">
-            <label className="block text-xs md:text-sm font-medium text-white mb-2 uppercase">
+            <label className="block text-base md:text-lg font-medium text-white mb-2 uppercase">
               Email Address *
             </label>
             <input
@@ -253,7 +253,7 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs md:text-sm font-medium text-white mb-2 uppercase">
+              <label className="block text-base md:text-lg font-medium text-white mb-2 uppercase">
                 Phone Number
               </label>
               <input
@@ -265,16 +265,15 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
               />
             </div>
             <div>
-              <label className="block text-xs md:text-sm font-medium text-white mb-2 uppercase">
+              <label className="block text-base md:text-lg font-medium text-white mb-2 uppercase">
                 Handicap
               </label>
               <input
-                type="number"
-                step="0.1"
+                type="text"
                 value={formData.handicap}
                 onChange={(e) => setFormData({ ...formData, handicap: e.target.value })}
                 className="w-full bg-[#444444] rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary-400/20"
-                placeholder="e.g., 12.5"
+                placeholder="e.g., 12.5 or +2"
               />
             </div>
           </div>
@@ -282,10 +281,10 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
 
         {/* Shipping Information */}
         <div className="mb-6 md:mb-8">
-          <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4 text-white uppercase">Shipping Address</h3>
+          <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4 text-[#DAF612] uppercase">Shipping Address</h3>
           <div className="space-y-4">
             <div>
-              <label className="block text-xs md:text-sm font-medium text-white mb-2 uppercase">
+              <label className="block text-base md:text-lg font-medium text-white mb-2 uppercase">
                 Street Address *
               </label>
               <input
@@ -298,7 +297,7 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-xs md:text-sm font-medium text-white mb-2 uppercase">
+                <label className="block text-base md:text-lg font-medium text-white mb-2 uppercase">
                   City *
                 </label>
                 <input
@@ -310,7 +309,7 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
                 />
               </div>
               <div>
-                <label className="block text-xs md:text-sm font-medium text-white mb-2 uppercase">
+                <label className="block text-base md:text-lg font-medium text-white mb-2 uppercase">
                   State *
                 </label>
                 <input
@@ -322,7 +321,7 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
                 />
               </div>
               <div>
-                <label className="block text-xs md:text-sm font-medium text-white mb-2 uppercase">
+                <label className="block text-base md:text-lg font-medium text-white mb-2 uppercase">
                   ZIP Code *
                 </label>
                 <input
