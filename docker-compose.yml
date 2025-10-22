@@ -7,10 +7,9 @@ services:
       dockerfile: ./packages/consumer-server/Dockerfile
     ports:
       - "3002:3002"
-    volumes:
-      # Mount the models directory from the repository
-      # Path on host : Path in container
-      - ./models:/app/models
+    # volumes:
+      # Optional: Mount models directory to override built-in models
+      # - ./models:/app/models
     environment:
       # Server
       - PORT=3002
