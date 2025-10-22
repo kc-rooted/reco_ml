@@ -63,7 +63,9 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
         allProbabilities: allProbabilities || []
       };
 
-      await axios.post('http://localhost:3002/api/submit', payload);
+      // Use environment variable or default to relative URL for production
+      const apiUrl = import.meta.env.VITE_API_URL || '/api/submit';
+      await axios.post(apiUrl, payload);
       setSubmitted(true);
     } catch (err: any) {
       console.error('Submission error:', err);

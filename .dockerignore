@@ -14,11 +14,12 @@ dist
 # Exclude non-consumer packages
 packages/admin-client
 packages/admin-server
-packages/shared-ui
 
 # Keep only what's needed
 !packages/consumer-server
+!packages/consumer-client
 !packages/core
+!packages/shared-ui
 !models
 !tsconfig.json
 !tsconfig.base.json

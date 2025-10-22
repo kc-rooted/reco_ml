@@ -241,6 +241,17 @@ app.post('/api/test-email', async (req, res) => {
   }
 });
 
+// Serve static files from React app (production only)
+if (process.env.NODE_ENV === 'production') {
+  const frontendPath = path.join(__dirname, '../../consumer-client/dist');
+  app.use(express.static(frontendPath));
+
+  // Handle React routing - return all requests to React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'));
+  });
+}
+
 const PORT = process.env.PORT || 3002;
 
 // Startup sequence
