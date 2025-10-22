@@ -80,7 +80,7 @@ app.post('/api/predict', async (req, res) => {
 
     // For consumer, we still calculate chartData but it won't be shown in UI
     // This is useful for debugging and potential future use
-    const chartData = probabilities.map((prob, index) => ({
+    const chartData = probabilities.map((prob: number, index: number) => ({
       shaft: SHAFT_NAMES[index],
       probability: Math.round(prob * 100),
       color: SHAFT_NAMES[index].includes('Red') ? '#f65d4a' :
