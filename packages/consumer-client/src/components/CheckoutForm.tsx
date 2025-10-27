@@ -310,7 +310,7 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
               </div>
               <div>
                 <label className="block text-base md:text-lg font-medium text-white mb-2 uppercase">
-                  State *
+                  State / Province *
                 </label>
                 <input
                   type="text"
@@ -322,7 +322,7 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
               </div>
               <div>
                 <label className="block text-base md:text-lg font-medium text-white mb-2 uppercase">
-                  ZIP Code *
+                  ZIP / Postal Code *
                 </label>
                 <input
                   type="text"
@@ -330,6 +330,7 @@ export default function CheckoutForm({ recommendations, quizAnswers, allProbabil
                   value={formData.zipCode}
                   onChange={(e) => setFormData({ ...formData, zipCode: e.target.value })}
                   className="w-full bg-[#444444] rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary-400/20"
+                  placeholder="e.g., 10001 or K1A 0B1"
                 />
               </div>
             </div>

@@ -27,8 +27,8 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
     if (!formData.name.trim()) newErrors.name = 'Name is required';
     if (!formData.street.trim()) newErrors.street = 'Street address is required';
     if (!formData.city.trim()) newErrors.city = 'City is required';
-    if (!formData.state.trim()) newErrors.state = 'State is required';
-    if (!formData.zip.trim()) newErrors.zip = 'ZIP code is required';
+    if (!formData.state.trim()) newErrors.state = 'State/Province is required';
+    if (!formData.zip.trim()) newErrors.zip = 'ZIP/Postal code is required';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -189,7 +189,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
 
                 <div>
                   <label className="block text-lg font-medium text-white mb-2 uppercase">
-                    State *
+                    State / Province *
                   </label>
                   <input
                     type="text"
@@ -206,7 +206,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-lg font-medium text-white mb-2 uppercase">
-                    ZIP Code *
+                    ZIP / Postal Code *
                   </label>
                   <input
                     type="text"
@@ -214,7 +214,7 @@ export default function UserDetailsForm({ recommendations, onSubmit, onBack }: U
                     value={formData.zip}
                     onChange={handleChange}
                     className={`w-full bg-[#444444] rounded-xl pl-4 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary-400/20 ${errors.zip ? 'border-2 border-red-500' : ''}`}
-                    placeholder="10001"
+                    placeholder="10001 or K1A 0B1"
                   />
                   {errors.zip && <p className="text-red-500 text-sm mt-1">{errors.zip}</p>}
                 </div>
